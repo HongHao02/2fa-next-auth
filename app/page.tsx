@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { poppins } from "../components/fonts";
 import { cn } from "@/lib/utils";
 import LoginButton from "@/components/auth/login-button";
+import Link from "next/link";
 export default function Home() {
   return (
     <main className="text-white flex h-full flex-col justify-center items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-600 to-slate-950">
@@ -16,8 +17,8 @@ export default function Home() {
         </h1>
         <p>A simple authentication service</p>
         <LoginButton>
-          <Button variant={"outline"} size={"lg"} className="text-black">
-            Log in
+          <Button variant={"outline"} size={"lg"} className="text-black" asChild>
+            <Link href={'/auth/login'}> Log in</Link>
           </Button>
         </LoginButton>
       </div>
