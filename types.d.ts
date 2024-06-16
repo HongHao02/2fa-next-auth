@@ -13,7 +13,8 @@ declare module 'next-auth' {
 
     interface User {
         customField?: string; //Add custom field to interface User
-        role?: UserRole; //Add role field for user
+        role?: UserRole; //Add role field for user,
+        name: string | null
     }
 }
 

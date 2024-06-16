@@ -8,12 +8,29 @@ import { getUserById } from './data/user';
 import { UserRole } from './lib/definitons';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+    trustHost: true,
     adapter: PrismaAdapter(db),
     session: { strategy: 'jwt' },
     ...authConfig,
+    pages: {
+        signIn: '/auth/login',
+        error: '/auth/error',
+    },
+    events: {
+        async linkAccount({ user }) {
+            await db.user.update({
+                where: { id: user.id },
+                data: { emailVerified: new Date() },
+            });
+        },
+    },
     callbacks: {
         async signIn({ user }) {
             if (user) {
+                console.log('[*auth.ts*-->signIn_user]', user);
+                if(user.id){
+                    return true;
+                }
                 const existingUser = await getUserById(user?.id || '');
                 //not allow user to login if they do not have emailVerified
                 if (!existingUser || !existingUser.emailVerified) {

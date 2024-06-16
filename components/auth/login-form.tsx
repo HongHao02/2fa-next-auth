@@ -12,6 +12,8 @@ import {
   FormMessage,
 } from "../ui/form";
 import { useTransition } from "react";
+import {  useSearchParams } from "next/navigation";
+
 import CardWrapper from "./card-wrapper";
 import { LoginSchema } from "@/schemas";
 import { Input } from "../ui/input";
@@ -25,6 +27,11 @@ const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+
+  const searchParams= useSearchParams()
+  const urlError= searchParams.get('error') === 'OAuthAccountNotLinked' ? "Email already in use with different provider":''
+
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -89,7 +96,7 @@ const LoginForm = () => {
               )}
             />
           </div>
-          <FormError message={error}></FormError>
+          <FormError message={error || urlError}></FormError>
           <FormSuccess message={success}></FormSuccess>
           <Button type="submit" className="w-full" disabled={isPending}>
             Login

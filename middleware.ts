@@ -3,7 +3,7 @@ const { auth } = NextAuth(authConfig);
 
 import authConfig from './auth.config';
 import { publicRoutes, apiAuthPrefix, authenticationRoutes, DEFAULT_LOGIN_DEIRECT } from './routes';
-import next from 'next';
+
 export default auth((req) => {
     //handle route to protect or allow access
     // req.auth

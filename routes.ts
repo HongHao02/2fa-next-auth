@@ -13,7 +13,8 @@ export const publicRoutes: string[]=[
  */
 export const authenticationRoutes: string[]=[
     "/auth/login",
-    "/auth/register"
+    "/auth/register",
+    '/auth/error'
 ]
 
 /**
