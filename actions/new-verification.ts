@@ -5,6 +5,8 @@ import { getUserByEmail } from '@/data/user';
 import { getVerificationTokenByToken } from '@/data/verification-token';
 
 export const newVerificationToken = async (token: string) => {
+    console.log("[server-action_verified] ",token);
+    
     const existingToken = await getVerificationTokenByToken(token);
 
     if (!existingToken) {
@@ -16,6 +18,9 @@ export const newVerificationToken = async (token: string) => {
 
     if (!existingUser) {
         return { error: 'Email does not exist!' };
+    }
+    if(hasExpired){
+        return {error: "Token has expired!"}
     }
     await db.user.update({
         where: {
@@ -32,5 +37,5 @@ export const newVerificationToken = async (token: string) => {
             id: existingToken.id,
         },
     });
-    return { success: 'Email verified!' };
+    return { success: 'Email verified! You can login now' };
 };

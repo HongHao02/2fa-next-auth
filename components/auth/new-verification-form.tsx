@@ -14,6 +14,8 @@ const NewVerificationForm = () => {
     const [success, setSuccess] = useState<string | undefined>();
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
+    console.log('[token_for_register] ', token);
+    
 
     const onSubmit = useCallback(() => {
         if(success || error) return;
@@ -29,14 +31,14 @@ const NewVerificationForm = () => {
             .catch((error) => {
                 setError('Something went wrong!');
             });
-    }, [token, success]);
+    }, [token, success,error]);
 
     useEffect(() => {
         onSubmit();
     }, [onSubmit]);
 
     return (
-        <CardWrapper headerLabel="Confirm your email" backButtonHref="/auth/login" backButtonLabel="Back to logi">
+        <CardWrapper headerLabel="Confirm your email" backButtonHref="/auth/login" backButtonLabel="Back to login">
             <div className="flex w-full justify-center items-center">
                 {!success && !error && <BeatLoader></BeatLoader>}
                 <FormSuccess message={success}></FormSuccess>

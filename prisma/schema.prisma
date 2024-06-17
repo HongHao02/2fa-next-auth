@@ -56,7 +56,16 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model VerificationToken {
+model verificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  // @@unique([token, email])
+}
+
+model passwordResetToken {
   id      String   @id @default(cuid())
   email   String
   token   String
