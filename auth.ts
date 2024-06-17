@@ -6,6 +6,7 @@ import { db } from './lib/db';
 import authConfig from './auth.config';
 import { getUserById } from './data/user';
 import { UserRole } from './lib/definitons';
+import { getTwoFactorConfirmationByUserId } from './data/two-factor-confirmation';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     trustHost: true,
@@ -38,7 +39,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return false;
             }
             //Add 2FA check
-            
+            if (existingUser.isTwoFactorEnabled) {
+                const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
+                if (!twoFactorConfirmation) {
+                    return false;
+                }
+                //Delete two factor confirmation for the next login
+                await db.twoFactorConfirmation.delete({
+                    where: {
+                        id: twoFactorConfirmation.id,
+                    },
+                });
+            }
+
             return true;
         },
         async session({ token, session }) {

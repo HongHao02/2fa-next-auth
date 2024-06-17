@@ -340,3 +340,13 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 </html>`,
     });
 };
+
+//2FA
+export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+    await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: '2FA code for NextAuth app',
+        html: `<p>Your 2FA code here: ${token}</p>`,
+    });
+};
