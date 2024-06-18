@@ -4,7 +4,7 @@ import React from 'react'
 
 const DashboardPage = () => {
     return (
-        <div className='flex items-center gap-x-2'>
+        <div className=' gap-x-2'>
             Dashboard Page
             <Button asChild><Link href={'/setting'}>Setting</Link></Button>
         </div>

@@ -15,6 +15,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ...authConfig,
     pages: {
         signIn: '/auth/login',
+        signOut:'/',
         error: '/auth/error',
     },
     events: {
@@ -60,7 +61,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.customField = token.customField as string;
                 session.user.id = token.sub;
                 session.user.role = token.role as UserRole;
+                session.user.emailVerified= session.expires
             }
+            // console.log({ sessionToken_v2: session });
             return session;
         },
         async jwt({ token, user }) {
