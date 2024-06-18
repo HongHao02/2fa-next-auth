@@ -9,21 +9,24 @@ declare module 'next-auth' {
         user: {
             customField?: string; //Add custom field
             role?: UserRole; //Add role field for user
-            emailVerified: DateTime
+            emailVerified: DateTime;
+            isTowFactorEnable: boolean;
         } & DefaultSession['user'];
     }
 
     interface User {
         customField?: string; //Add custom field to interface User
         role?: UserRole; //Add role field for user,
-        name: string | null,
-        emailVerified: DateTime
+        name: string | null;
+        emailVerified: DateTime;
+        isTowFactorEnable: boolean;
     }
 }
 
 declare module 'next-auth/jwt' {
     interface JWT {
-        customField?: string; 
+        customField?: string;
         role?: UserRole;
+        isTowFactorEnable: boolean;
     }
 }

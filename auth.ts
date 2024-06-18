@@ -15,7 +15,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ...authConfig,
     pages: {
         signIn: '/auth/login',
-        signOut:'/',
+        signOut: '/',
         error: '/auth/error',
     },
     events: {
@@ -57,11 +57,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
         async session({ token, session }) {
             console.log({ sessionToken: token });
-            if (token.sub && session.user) {
-                session.user.customField = token.customField as string;
-                session.user.id = token.sub;
-                session.user.role = token.role as UserRole;
-                session.user.emailVerified= session.expires
+
+            if (session.user) {
+                if (token.sub) {
+                    session.user.id = token.sub;
+                }
+                if (token.role) {
+                    session.user.role = token.role as UserRole;
+                }
+                if (token.customField) {
+                    session.user.customField = token.customField;
+                }
+                session.user.emailVerified = session.expires;
+                session.user.isTowFactorEnable = token.isTowFactorEnable;
             }
             // console.log({ sessionToken_v2: session });
             return session;
@@ -73,6 +81,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (user && existingUser) {
                 token.customField = 'anything_you_want';
                 token.role = user.role || UserRole.USER;
+                token.isTowFactorEnable = existingUser.isTwoFactorEnabled;
             }
             return token;
         },
