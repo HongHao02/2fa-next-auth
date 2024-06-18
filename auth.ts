@@ -55,14 +55,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return true;
         },
         async session({ token, session }) {
-            console.log({ sessionToken: token });
-
+            // console.log({ sessionToken: token });
             if (session.user) {
                 if (token.sub) {
                     session.user.id = token.sub;
-                }
-                if (token.role) {
-                    session.user.role = token.role as UserRole;
+                    const existingUser = await getUserById(token.sub);
+                    if (existingUser?.role) {
+                        session.user.role = existingUser.role as UserRole;
+                    } else {
+                        session.user.role = token.role;
+                    }
                 }
                 if (token.customField) {
                     session.user.customField = token.customField;
@@ -70,13 +72,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.emailVerified = session.expires;
                 session.user.isTowFactorEnable = token.isTowFactorEnable;
             }
-            // console.log({ sessionToken_v2: session });
+            console.log({ sessionToken_v2: session });
             return session;
         },
         async jwt({ token, user }) {
             if (!token.sub) return token;
             const existingUser = await getUserById(token.sub);
-            console.log({ token, user });
             if (user && existingUser) {
                 token.customField = 'anything_you_want';
                 token.role = user.role || UserRole.USER;

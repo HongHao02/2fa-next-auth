@@ -130,7 +130,7 @@ const LoginForm = () => {
                                                     disabled={isPending}
                                                     type="text"
                                                     placeholder="123456"
-                                                    autoComplete='current-password'
+                                                    autoComplete='current-code'
                                                 />
                                             </FormControl>
                                             <FormMessage></FormMessage>
