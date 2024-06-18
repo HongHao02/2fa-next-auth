@@ -9,7 +9,6 @@ import { UserRole } from './lib/definitons';
 import { getTwoFactorConfirmationByUserId } from './data/two-factor-confirmation';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-    trustHost: true,
     adapter: PrismaAdapter(db),
     session: { strategy: 'jwt' },
     ...authConfig,
