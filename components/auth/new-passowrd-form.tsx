@@ -52,7 +52,7 @@ const NewPassowrdForm = () => {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input {...field} disabled={isPending} placeholder="******" type="password" />
+                                        <Input {...field} disabled={isPending} placeholder="******" type="password" autoComplete='current-password'/>
                                     </FormControl>
                                     <FormMessage></FormMessage>
                                 </FormItem>
@@ -65,7 +65,7 @@ const NewPassowrdForm = () => {
                                 <FormItem>
                                     <FormLabel>Confirm Password</FormLabel>
                                     <FormControl>
-                                        <Input {...field} disabled={isPending} placeholder="******" type="password" />
+                                        <Input {...field} disabled={isPending} placeholder="******" type="password" autoComplete='current-password'/>
                                     </FormControl>
                                     <FormMessage></FormMessage>
                                 </FormItem>

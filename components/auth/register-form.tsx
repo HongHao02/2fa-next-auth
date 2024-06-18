@@ -65,6 +65,7 @@ const RegisterForm = () => {
                       disabled={isPending}
                       type="text"
                       placeholder="John Doe"
+                      autoComplete="username"
                     />
                   </FormControl>
                   <FormMessage></FormMessage>
@@ -83,6 +84,7 @@ const RegisterForm = () => {
                       disabled={isPending}
                       placeholder="john.doe@example.com"
                       type="email"
+                      autoComplete="email"
                     />
                   </FormControl>
                   <FormMessage></FormMessage>
@@ -101,6 +103,7 @@ const RegisterForm = () => {
                       disabled={isPending}
                       type="password"
                       placeholder="******"
+                      autoComplete='current-password'
                     />
                   </FormControl>
                   <FormMessage></FormMessage>

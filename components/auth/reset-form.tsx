@@ -52,6 +52,7 @@ const ResetForm = () => {
                                             disabled={isPending}
                                             placeholder="john.doe@example.com"
                                             type="email"
+                                            autoComplete='email'
                                         />
                                     </FormControl>
                                     <FormMessage></FormMessage>
