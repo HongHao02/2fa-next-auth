@@ -11,6 +11,7 @@ declare module 'next-auth' {
             role?: UserRole; //Add role field for user
             emailVerified: DateTime;
             isTowFactorEnable: boolean;
+            isOAuth: boolean;
         } & DefaultSession['user'];
     }
 
@@ -20,13 +21,15 @@ declare module 'next-auth' {
         name: string | null;
         emailVerified: DateTime;
         isTowFactorEnable: boolean;
+        isOAuth: boolean;
     }
 }
 
 declare module 'next-auth/jwt' {
     interface JWT {
         customField?: string;
-        role?: UserRole;
+        role: UserRole;
         isTowFactorEnable: boolean;
+        isOAuth: boolean;
     }
 }

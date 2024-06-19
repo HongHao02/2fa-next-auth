@@ -7,8 +7,9 @@ import authConfig from './auth.config';
 import { getUserById } from './data/user';
 import { UserRole } from './lib/definitons';
 import { getTwoFactorConfirmationByUserId } from './data/two-factor-confirmation';
+import { getAccountByUserId } from './data/account';
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
     adapter: PrismaAdapter(db),
     session: { strategy: 'jwt' },
     ...authConfig,
@@ -59,30 +60,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (session.user) {
                 if (token.sub) {
                     session.user.id = token.sub;
-                    const existingUser = await getUserById(token.sub);
-                    if (existingUser?.role) {
-                        session.user.role = existingUser.role as UserRole;
-                    } else {
-                        session.user.role = token.role;
-                    }
                 }
+                session.user.role = token.role;
                 if (token.customField) {
                     session.user.customField = token.customField;
                 }
                 session.user.emailVerified = session.expires;
                 session.user.isTowFactorEnable = token.isTowFactorEnable;
+                session.user.name = token.name;
+                session.user.email = token.email as string;
+                session.user.isOAuth = token.isOAuth;
             }
             console.log({ sessionToken_v2: session });
             return session;
         },
-        async jwt({ token, user }) {
+        async jwt({ token }) {
             if (!token.sub) return token;
             const existingUser = await getUserById(token.sub);
-            if (user && existingUser) {
-                token.customField = 'anything_you_want';
-                token.role = user.role || UserRole.USER;
-                token.isTowFactorEnable = existingUser.isTwoFactorEnabled;
+            if (!existingUser) {
+                return token;
             }
+            const existingAccount = await getAccountByUserId(existingUser.id);
+            token.isOAuth = !!existingAccount;
+            token.customField = 'anything_you_want';
+            token.role = (existingUser.role as UserRole) || UserRole.USER;
+            token.isTowFactorEnable = existingUser.isTwoFactorEnabled;
+            token.email = existingUser.email;
+            token.name = existingUser.name;
+            token.picture = existingUser.image;
+
             return token;
         },
     },
