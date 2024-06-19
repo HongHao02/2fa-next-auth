@@ -18,17 +18,16 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     const session = await auth();
-    console.log("root-session ",session);
-    
-    
+    console.log('root-session ', session);
+
     return (
-        <html lang="en">
-            <body className={inter.className}>
-                <SessionProvider session={session}>
+        <SessionProvider session={session}>
+            <html lang="en">
+                <body className={inter.className}>
                     <Toaster richColors></Toaster>
                     {children}
-                </SessionProvider>
-            </body>
-        </html>
+                </body>
+            </html>
+        </SessionProvider>
     );
 }
