@@ -3,7 +3,7 @@ import { getUserByEmail } from '@/data/user';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
+const domain = process.env.NEXT_PUBLIC_APP_URL;
 /**
  * Send verification email to user's email.
  * User will click 'confirm' to confirm login
@@ -11,7 +11,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  * @param token
  */
 export const sendVrificationEmail = async (email: string, token: string) => {
-    const confirmLink: string = `http://localhost:3000/auth/new-verification?token=${token}`;
+    const confirmLink: string = `${domain}/auth/new-verification?token=${token}`;
     const existingUser = await getUserByEmail(email);
 
     await resend.emails.send({

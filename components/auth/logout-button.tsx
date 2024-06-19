@@ -9,10 +9,8 @@ interface LogoutButtonProps {
 }
 
 const LogoutButton = ({ children }: LogoutButtonProps) => {
-    const router = useRouter();
     const onClick = () => {
         logout();
-        router.push('/');
     };
     return (
         <span onClick={onClick} className="cursor-pointer">

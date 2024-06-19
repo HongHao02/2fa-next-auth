@@ -21,13 +21,13 @@ export default async function RootLayout({
     console.log('root-session ', session);
 
     return (
-        <SessionProvider session={session}>
-            <html lang="en">
-                <body className={inter.className}>
+        <html lang="en">
+            <body className={inter.className}>
+                <SessionProvider session={session} refetchOnWindowFocus>
                     <Toaster richColors></Toaster>
                     {children}
-                </body>
-            </html>
-        </SessionProvider>
+                </SessionProvider>
+            </body>
+        </html>
     );
 }

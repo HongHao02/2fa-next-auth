@@ -1,3 +1,4 @@
+'use client';
 import { useSession } from 'next-auth/react';
 
 /**
@@ -6,6 +7,11 @@ import { useSession } from 'next-auth/react';
  */
 export const useCurrentUser = () => {
     const session = useSession();
-    console.log('useCurrentSession ',session);
+    const refetchSession = async () => {
+        await session.update();
+    };
+    // refetchSession();
+    console.log('useCurrentSession ', session);
+
     return session.data?.user;
 };

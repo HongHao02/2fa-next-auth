@@ -15,7 +15,6 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
     ...authConfig,
     pages: {
         signIn: '/auth/login',
-        signOut: '/',
         error: '/auth/error',
     },
     events: {

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import Link from 'next/link';
 import { useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
 
@@ -14,7 +14,8 @@ import { Button } from '../ui/button';
 import FormError from '../form-error';
 import FormSuccess from '../form-success';
 import { login } from '@/actions/login';
-import Link from 'next/link';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '../ui/form';
 
 const LoginForm = () => {
     const [isPending, startTransition] = useTransition();
@@ -24,6 +25,7 @@ const LoginForm = () => {
     // const router= useRouter()
 
     const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl');
     const urlError =
         searchParams.get('error') === 'OAuthAccountNotLinked' ? 'Email already in use with different provider' : '';
 
@@ -44,7 +46,7 @@ const LoginForm = () => {
         setError('');
         setSuccess('');
         startTransition(() => {
-            login(values)
+            login(values, callbackUrl)
                 .then((data) => {
                     if (data?.error) {
                         form.reset();
@@ -85,7 +87,7 @@ const LoginForm = () => {
                                                     disabled={isPending}
                                                     placeholder="john.doe@example.com"
                                                     type="email"
-                                                    autoComplete='email'
+                                                    autoComplete="email"
                                                 />
                                             </FormControl>
                                             <FormMessage></FormMessage>
@@ -104,7 +106,7 @@ const LoginForm = () => {
                                                     disabled={isPending}
                                                     type="password"
                                                     placeholder="******"
-                                                    autoComplete='current-password'
+                                                    autoComplete="current-password"
                                                 />
                                             </FormControl>
                                             <FormMessage></FormMessage>
@@ -117,7 +119,7 @@ const LoginForm = () => {
                             </>
                         ) : (
                             <>
-                                <FormField
+                                {/* <FormField
                                     control={form.control}
                                     name="code"
                                     render={({ field }) => (
@@ -135,7 +137,34 @@ const LoginForm = () => {
                                             <FormMessage></FormMessage>
                                         </FormItem>
                                     )}
-                                />
+                                /> */}
+                                <div className="flex justify-center">
+                                    <FormField
+                                        control={form.control}
+                                        name="code"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Two Factor Code</FormLabel>
+                                                <FormControl>
+                                                    <InputOTP maxLength={6} {...field}>
+                                                        <InputOTPGroup>
+                                                            <InputOTPSlot index={0} />
+                                                            <InputOTPSlot index={1} />
+                                                            <InputOTPSlot index={2} />
+                                                            <InputOTPSlot index={3} />
+                                                            <InputOTPSlot index={4} />
+                                                            <InputOTPSlot index={5} />
+                                                        </InputOTPGroup>
+                                                    </InputOTP>
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Please enter the two factor code sent to your email.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                             </>
                         )}
                     </div>
