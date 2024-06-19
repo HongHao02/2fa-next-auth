@@ -9,7 +9,7 @@ import { generateVerificationToken } from '@/lib/token';
 import { SettingsSchema } from '@/schemas';
 import * as z from 'zod';
 import bcrypt from 'bcryptjs';
-import { UserRole } from '@/lib/definitons';
+import { UserRole } from '@prisma/client';
 
 export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     const user = await currentUser();
@@ -55,7 +55,7 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
         user: {
             name: updateUser.name,
             email: updateUser.email,
-            isTwoFactorEnable: updateUser.isTwoFactorEnabled,
+            isTwoFactorEnabled: updateUser.isTwoFactorEnabled,
             role: updateUser.role as UserRole,
         },
     });

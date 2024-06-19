@@ -36,8 +36,8 @@ const UserInfo = ({ user, label }: userInforProps) => {
                 </div>
                 <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm ">
                     <p className="text-sm font-medium">TWO Factor Authentication</p>
-                    <Badge variant={user?.isTwoFactorEnable ? 'success' : 'destructive'}>
-                        {user?.isTwoFactorEnable ? 'ON' : 'OFF'}
+                    <Badge variant={user?.isTwoFactorEnabled ? 'success' : 'destructive'}>
+                        {user?.isTwoFactorEnabled ? 'ON' : 'OFF'}
                     </Badge>
                 </div>
             </CardContent>

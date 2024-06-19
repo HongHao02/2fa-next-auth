@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import FormError from '@/components/form-error';
 import FormSuccess from '@/components/form-success';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectLabel } from '@/components/ui/select';
-import { UserRole } from '@/lib/definitons';
+import { UserRole } from '@prisma/client';
 import { Switch } from '@/components/ui/switch';
 const SettingPage = () => {
     const user = useCurrentUser();
@@ -33,7 +33,7 @@ const SettingPage = () => {
             password: undefined, //not show password, if user does not enter password nothing will be updated
             newPassword: undefined,
             role: user?.role || undefined,
-            isTwoFactorEnabled: user?.isTwoFactorEnable || undefined,
+            isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
         },
     });
     const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
@@ -193,7 +193,9 @@ const SettingPage = () => {
                         </div>
                         {!success && <FormError message={error}></FormError>}
                         <FormSuccess message={success}></FormSuccess>
-                        <Button type="submit" disabled={isPending}>Save</Button>
+                        <Button type="submit" disabled={isPending}>
+                            Save
+                        </Button>
                     </form>
                 </Form>
             </CardContent>
