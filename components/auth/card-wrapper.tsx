@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
+
 import {
   Card,
   CardHeader,
   CardFooter,
   CardContent,
-  CardDescription,
-  CardTitle,
 } from "../ui/card";
 import Header from "./header";
 import Social from "./social";

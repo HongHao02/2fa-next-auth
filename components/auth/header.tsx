@@ -1,7 +1,7 @@
 import React from 'react'
+
 import { poppins } from '../fonts'
 import { cn } from '@/lib/utils'
-
 
 interface HeaderProps{
     label: string

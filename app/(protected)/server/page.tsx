@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+
 import { currentUser } from '@/lib/auth';
 import UserInfo from '@/components/user-info';
 import RectangleSkeletonCard from '@/components/rectangle-skeleton-card';

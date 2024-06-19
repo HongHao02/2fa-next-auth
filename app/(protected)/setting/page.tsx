@@ -1,7 +1,5 @@
 'use client';
 import React, { useState, useTransition } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';

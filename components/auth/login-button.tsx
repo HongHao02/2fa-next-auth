@@ -2,7 +2,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-
 interface LoginButtonProps {
   children: React.ReactNode;
   mode?: "modal" | "redirect";

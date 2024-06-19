@@ -1,7 +1,9 @@
 'use client';
+
+import React from 'react';
+
 import { userCurrentRole } from '@/hooks/use-current-role';
 import { UserRole } from '@/lib/definitons';
-import React from 'react';
 import FormError from '../form-error';
 
 interface RoleGateProps {

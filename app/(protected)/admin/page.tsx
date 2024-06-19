@@ -1,4 +1,7 @@
 'use client';
+
+import React from 'react';
+
 import { admin } from '@/actions/admin';
 import RoleGate from '@/components/auth/role-gate';
 import FormSuccess from '@/components/form-success';
@@ -6,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { userCurrentRole } from '@/hooks/use-current-role';
 import { UserRole } from '@/lib/definitons';
-import React from 'react';
+
 import { toast } from 'sonner';
 
 const AdminPage = () => {

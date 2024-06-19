@@ -1,7 +1,9 @@
 'use client';
-import { logout } from '@/actions/logout';
 import React from 'react';
+
+import { logout } from '@/actions/logout';
 import { useRouter } from 'next/navigation';
+
 interface LogoutButtonProps {
     children?: React.ReactNode;
 }

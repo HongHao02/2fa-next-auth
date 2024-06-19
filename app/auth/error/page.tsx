@@ -1,6 +1,8 @@
 'use client'
-import ErrorCard from '@/components/auth/error-card'
+
 import React from 'react'
+
+import ErrorCard from '@/components/auth/error-card'
 import { useSearchParams } from 'next/navigation'
 const ErrorPage = () => {
     const searchParams = useSearchParams()

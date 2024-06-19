@@ -18,7 +18,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import FormError from "../form-error";
 import FormSuccess from "../form-success";
-import { ImProfile } from "react-icons/im";
 import { register } from "@/actions/register";
 
 const RegisterForm = () => {
