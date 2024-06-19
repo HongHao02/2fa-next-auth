@@ -71,7 +71,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
                 session.user.email = token.email as string;
                 session.user.isOAuth = token.isOAuth;
             }
-            console.log({ sessionToken_v2: session });
+            // console.log({ sessionToken_v2: session });
             return session;
         },
         async jwt({ token }) {
