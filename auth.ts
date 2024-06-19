@@ -66,7 +66,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
                     session.user.customField = token.customField;
                 }
                 session.user.emailVerified = session.expires;
-                session.user.isTowFactorEnable = token.isTowFactorEnable;
+                session.user.isTwoFactorEnable = token.isTwoFactorEnable;
                 session.user.name = token.name;
                 session.user.email = token.email as string;
                 session.user.isOAuth = token.isOAuth;
@@ -84,7 +84,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
             token.isOAuth = !!existingAccount;
             token.customField = 'anything_you_want';
             token.role = (existingUser.role as UserRole) || UserRole.USER;
-            token.isTowFactorEnable = existingUser.isTwoFactorEnabled;
+            token.isTwoFactorEnable = existingUser.isTwoFactorEnabled;
             token.email = existingUser.email;
             token.name = existingUser.name;
             token.picture = existingUser.image;

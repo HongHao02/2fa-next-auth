@@ -35,7 +35,7 @@ const SettingPage = () => {
             password: undefined, //not show password, if user does not enter password nothing will be updated
             newPassword: undefined,
             role: user?.role || undefined,
-            isTwoFactorEnabled: user?.isTowFactorEnable || undefined,
+            isTwoFactorEnabled: user?.isTwoFactorEnable || undefined,
         },
     });
     const onSubmit = (values: z.infer<typeof SettingsSchema>) => {

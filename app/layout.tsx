@@ -26,7 +26,7 @@ export default async function RootLayout({
             <body className={inter.className}>
                 <SessionProvider session={session}>
                     <Toaster richColors></Toaster>
-                    {children}{' '}
+                    {children}
                 </SessionProvider>
             </body>
         </html>
