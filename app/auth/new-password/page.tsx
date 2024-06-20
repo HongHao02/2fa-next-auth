@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { Suspense } from 'react';
 
-import NewPassowrdForm from '@/components/auth/new-passowrd-form'
+import NewPassowrdForm from '@/components/auth/new-passowrd-form';
 
 const NewPasswordPage = () => {
-  return (
-    <NewPassowrdForm></NewPassowrdForm>
-  )
-}
+    return (
+        <Suspense>
+            <NewPassowrdForm></NewPassowrdForm>
+        </Suspense>
+    );
+};
 
-export default NewPasswordPage
+export default NewPasswordPage;

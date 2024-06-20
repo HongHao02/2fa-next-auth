@@ -1,9 +1,13 @@
-import React from "react";
+import React, { Suspense } from 'react';
 
-import LoginForm from "@/components/auth/login-form";
+import LoginForm from '@/components/auth/login-form';
 
 const LoginPage = () => {
-  return <LoginForm></LoginForm>;
+    return (
+        <Suspense>
+            <LoginForm></LoginForm>
+        </Suspense>
+    );
 };
 
 export default LoginPage;
