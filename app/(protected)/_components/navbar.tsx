@@ -2,9 +2,9 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
-
 import ActiveButton from './active-button';
 import UserButton from '@/components/auth/user-button';
+
 const navbar = [
     { active: '/server', href: '/server', label: 'Server' },
     { active: '/client', href: '/client', label: 'Client' },

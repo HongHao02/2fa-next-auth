@@ -17,6 +17,7 @@ import FormSuccess from '@/components/form-success';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectLabel } from '@/components/ui/select';
 import { UserRole } from '@prisma/client';
 import { Switch } from '@/components/ui/switch';
+
 const SettingPage = () => {
     const user = useCurrentUser();
     const [error, setError] = useState<string | undefined>();
