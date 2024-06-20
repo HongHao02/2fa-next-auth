@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useTransition } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { useSession } from 'next-auth/react';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
@@ -20,6 +20,7 @@ import { Switch } from '@/components/ui/switch';
 
 const SettingPage = () => {
     const user = useCurrentUser();
+
     const [error, setError] = useState<string | undefined>();
     const [success, setSuccess] = useState<string | undefined>();
 
@@ -37,6 +38,21 @@ const SettingPage = () => {
             isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
         },
     });
+    // Update form values when user data is available
+    useEffect(() => {
+        if (user) {
+            form.reset({
+                name: user?.name || undefined,
+                email: user?.email || undefined,
+                password: undefined,
+                newPassword: undefined,
+                role: user.role || undefined,
+                isTwoFactorEnabled: user.isTwoFactorEnabled || undefined,
+            });
+        }
+    }, [user, form]);
+    console.log('form ', form.getValues());
+
     const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
         startTransition(() => {
             settings(values)

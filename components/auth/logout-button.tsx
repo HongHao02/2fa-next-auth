@@ -8,7 +8,7 @@ interface LogoutButtonProps {
 
 const LogoutButton = ({ children }: LogoutButtonProps) => {
     const onClick = () => {
-        signOut()
+        signOut({ redirect: true });
     };
     return (
         <span onClick={onClick} className="cursor-pointer">
