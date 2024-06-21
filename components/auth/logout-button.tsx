@@ -11,7 +11,7 @@ const LogoutButton = ({ children }: LogoutButtonProps) => {
     const pathname = usePathname();
     const router = useRouter();
     const onClick = async () => {
-        await signOut({ redirect: true, callbackUrl: pathname });
+        await signOut({ callbackUrl: pathname });
         // router.push(pathname);
     };
     return (
