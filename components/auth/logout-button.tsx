@@ -10,9 +10,9 @@ interface LogoutButtonProps {
 const LogoutButton = ({ children }: LogoutButtonProps) => {
     const pathname = usePathname();
     const router = useRouter();
-    const onClick = () => {
-        signOut({ redirect: true, callbackUrl: pathname });
-        router.push(pathname);
+    const onClick = async () => {
+        await signOut({ redirect: true, callbackUrl: pathname });
+        // router.push(pathname);
     };
     return (
         <span onClick={onClick} className="cursor-pointer">
