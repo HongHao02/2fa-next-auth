@@ -8,6 +8,8 @@ import { getUserById } from './data/user';
 import { UserRole } from '@prisma/client';
 import { getTwoFactorConfirmationByUserId } from './data/two-factor-confirmation';
 import { getAccountByUserId } from './data/account';
+import { redirect } from 'next/navigation';
+import { DEFAULT_LOGIN_DEIRECT } from './routes';
 
 export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
     adapter: PrismaAdapter(db),
@@ -23,6 +25,9 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
                 where: { id: user.id },
                 data: { emailVerified: new Date() },
             });
+        },
+        async signOut(message) {
+            redirect(DEFAULT_LOGIN_DEIRECT);
         },
     },
     callbacks: {
