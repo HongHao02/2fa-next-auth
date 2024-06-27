@@ -19,7 +19,7 @@ const UserButton = () => {
         if (status === 'unauthenticated') {
             router.push('/');
         }
-    }, [status]);
+    }, [router, status]);
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
