@@ -54,6 +54,10 @@ model User {
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation twoFactorConfirmation?
   // Optional for WebAuthn support
+  sentEmails            Email[]                @relation("SentEmails")
+  receivedEmails        Recipient[]
+  replies               Reply[]
+  trash                 Trash[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -92,4 +96,47 @@ model passwordResetToken {
   expires DateTime
 
   @@unique([token, email])
+}
+
+model Email {
+  id         Int         @id @default(autoincrement())
+  sender     User        @relation("SentEmails", fields: [senderId], references: [id])
+  senderId   String
+  subject    String?
+  body       String?
+  sentAt     DateTime    @default(now())
+  recipients Recipient[]
+  replies    Reply[]
+  trash      Trash[]
+}
+
+model Recipient {
+  id          Int    @id @default(autoincrement())
+  email       Email  @relation(fields: [emailId], references: [id])
+  emailId     Int
+  recipient   User   @relation(fields: [recipientId], references: [id])
+  recipientId String
+}
+
+model Reply {
+  id        Int      @id @default(autoincrement())
+  email     Email    @relation(fields: [emailId], references: [id])
+  emailId   Int
+  sender    User     @relation(fields: [senderId], references: [id])
+  senderId  String
+  body      String
+  repliedAt DateTime @default(now())
+  replyTo   Reply?   @relation("ReplyToReplies", fields: [replyToId], references: [id])
+  replyToId Int?
+  replies   Reply[]  @relation("ReplyToReplies")
+}
+
+model Trash {
+  id             Int      @id @default(autoincrement())
+  email          Email    @relation(fields: [emailId], references: [id])
+  emailId        Int
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String
+  deletedAt      DateTime @default(now())
+  previousFolder String
 }
