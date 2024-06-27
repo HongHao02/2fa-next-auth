@@ -5,10 +5,9 @@ import authConfig from './auth.config';
 import { publicRoutes, apiAuthPrefix, authenticationRoutes, DEFAULT_LOGIN_DEIRECT } from './routes';
 
 export default auth((req) => {
-    console.log("[reqAuth] ", !!req.auth);
-    console.log("[reqNextURL] ", req.nextUrl);
-    console.log("[reqNextURL-pathName] ", req.nextUrl.pathname);
-    
+    // console.log("[reqAuth] ", !!req.auth);
+    // console.log("[reqNextURL] ", req.nextUrl);
+    // console.log("[reqNextURL-pathName] ", req.nextUrl.pathname);
     
     //handle route to protect or allow access
     // req.auth

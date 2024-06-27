@@ -11,6 +11,7 @@ const navbar = [
     { active: '/dashboard', href: '/dashboard', label: 'Dashboard' },
     { active: '/admin', href: '/admin', label: 'Admin' },
     { active: '/setting', href: '/setting', label: 'Setting' },
+    { active: '/tanstack', href: '/tanstack', label: 'Tanstack' },
 ];
 const NavBar = () => {
     const pathName = usePathname();
