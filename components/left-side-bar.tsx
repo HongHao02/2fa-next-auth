@@ -49,8 +49,8 @@ const ToolTipItem = ({ trigger, content, href }: ToolTipItemProps) => (
 const LeftSideBar = () => {
     return (
         <>
-            {SIDE_BAR_LIST.map(({ trigger, content, href }) => (
-                <ToolTipItem key={content} trigger={trigger} content={content} href={href} ></ToolTipItem>
+            {SIDE_BAR_LIST.map(({ trigger, content, href }, index) => (
+                <ToolTipItem key={index} trigger={trigger} content={content} href={href} ></ToolTipItem>
             ))}
         </>
     )

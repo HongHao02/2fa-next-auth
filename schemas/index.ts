@@ -62,3 +62,20 @@ export const RegisterSchema = z.object({
         message: 'Name is required!',
     }), //not set min() for login
 });
+
+export const NewEmailSchema = z.object({
+    to: z.string().email({
+        message: 'Email is required!',
+    }),
+    subject: z.string().min(4, {
+        message: 'Minimum 4 characters required!',
+    }),
+    content: z.string().min(1, {
+        message: 'Minimum 1 characters required!',
+    }),
+});
+export const ReplyEmailSchema = z.object({
+    body: z.string().min(4, {
+        message: 'Minimum 4 characters required!',
+    })
+});

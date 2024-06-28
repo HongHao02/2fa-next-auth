@@ -1,7 +1,9 @@
+'use client'
 import AuthContext from '@/components/auth-context'
 import Feature from '@/components/feature'
 import Header from '@/components/header'
 import LeftSideBar from '@/components/left-side-bar'
+import SidebarCustom from '@/components/SidebarCustom'
 import React from 'react'
 
 interface MailBoxGroupLayoutProps {
@@ -25,9 +27,9 @@ const MailBoxGroupLayout = ({ children }: MailBoxGroupLayoutProps) => {
                         </div>
                         <div className="flex flex-1 ">
                             <div className="w-2/12 hidden lg:block p-2 rounded-md">
-                                {/* Sidebar custom */}
+                                <SidebarCustom></SidebarCustom>
                             </div>
-                            <div className="w-10/12 bg-white">
+                            <div className="w-10/12 bg-white p-2">
                                 {children}
                             </div>
                         </div>
