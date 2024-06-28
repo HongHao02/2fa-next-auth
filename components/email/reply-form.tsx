@@ -43,7 +43,7 @@ const ReplyForm = ({ emailId }: { emailId: number }) => {
                     }
                     if (data?.success) {
                         form.reset();
-                        toast.success(data?.success);
+                        toast.success(data?.success)
                     }
                 })
                 .catch((error) => toast.error(error));

@@ -37,7 +37,6 @@ function SendEmailItem({ email }: SendEmailItemProps) {
             <div
                 className={`w-full flex p-2 gap-2  text-[12px] cursor-pointer hover:bg-white hover:border-b-[1px] hover:border-l-[1px] hover:shadow-md hover:rounded-sm group relative
                 }`}
-                // onClick={() => dispatch(addActiveEmail(email))}
             >
                 <div className="flex-1">
                     <div className="flex">

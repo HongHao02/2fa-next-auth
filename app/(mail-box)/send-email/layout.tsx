@@ -2,6 +2,7 @@
 import { getSendEmail } from '@/actions/send-email';
 import EmailItem from '@/components/email/email-item';
 import SendEmailItem from '@/components/email/send-email-item';
+import HashLoaderCustom from '@/components/hash-loader-custom';
 import { SkeletonCard } from '@/components/skeleton-card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { fakeEmails } from '@/data/placeholder';
@@ -15,7 +16,7 @@ const MailBoxLayout = ({ children }: { children: React.ReactNode }) => {
     });
     console.log('data ', data);
 
-    if (isLoading) return <Skeleton className="w-full h-full rounded-lg" />;
+    if (isLoading) return <HashLoaderCustom></HashLoaderCustom>;
     if (error) return <div>Error loading data: {error.message}</div>;
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 h-full w-full gap-2 ">

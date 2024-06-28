@@ -9,21 +9,20 @@ import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getEmailDetails } from '@/actions/email-detail';
-import { Skeleton } from '../ui/skeleton';
 import ReplyForm from './reply-form';
+import { HashLoader } from 'react-spinners';
 
 // import _ from 'lodash';
 
 const EmailDetails = ({ id }: { id: string }) => {
     const [showForm, setShowForm] = useState<boolean>(false);
-    const queryClient= useQueryClient()
     const { data, error, isLoading } = useQuery({
         queryKey: ['email-details', id],
         queryFn: () => getEmailDetails(parseInt(id))
     });
     console.log('data ', data);
-   
-    if (isLoading) return <Skeleton className="w-full h-full rounded-lg" />;
+
+    if (isLoading) return <div className='h-full flex justify-center items-center'><HashLoader color='#0284c7'></HashLoader></div>;
     if (error) return <div>Error loading data: {error.message}</div>;
     return (
         <div className="h-full space-y-2">
