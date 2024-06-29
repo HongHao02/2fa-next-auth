@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 
 import ActiveButton from './active-button';
 import UserButton from '@/components/auth/user-button';
+import { PATH_URL } from '@/constants';
 
 const navbar = [
     { active: '/server', href: '/server', label: 'Server' },
@@ -12,6 +13,7 @@ const navbar = [
     { active: '/admin', href: '/admin', label: 'Admin' },
     { active: '/setting', href: '/setting', label: 'Setting' },
     { active: '/tanstack', href: '/tanstack', label: 'Tanstack' },
+    { active: PATH_URL.MAIL_BOX, href: PATH_URL.MAIL_BOX, label: 'MailBox' },
 ];
 const NavBar = () => {
     const pathName = usePathname();

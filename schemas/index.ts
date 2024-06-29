@@ -79,3 +79,8 @@ export const ReplyEmailSchema = z.object({
         message: 'Minimum 4 characters required!',
     })
 });
+export const SearchSchema = z.object({
+    key: z.string().min(1, {
+        message: 'Minimum 1 characters required!',
+    })
+});

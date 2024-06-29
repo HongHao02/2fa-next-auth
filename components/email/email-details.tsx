@@ -10,7 +10,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getEmailDetails } from '@/actions/email-detail';
 import ReplyForm from './reply-form';
-import { HashLoader } from 'react-spinners';
+import HashLoaderCustom from '../hash-loader-custom';
 
 // import _ from 'lodash';
 
@@ -22,7 +22,7 @@ const EmailDetails = ({ id }: { id: string }) => {
     });
     console.log('data ', data);
 
-    if (isLoading) return <div className='h-full flex justify-center items-center'><HashLoader color='#0284c7'></HashLoader></div>;
+    if (isLoading) return <HashLoaderCustom></HashLoaderCustom>
     if (error) return <div>Error loading data: {error.message}</div>;
     return (
         <div className="h-full space-y-2">

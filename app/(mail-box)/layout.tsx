@@ -29,7 +29,7 @@ const MailBoxGroupLayout = ({ children }: MailBoxGroupLayoutProps) => {
                             <div className="w-2/12 hidden lg:block p-2 rounded-md">
                                 <SidebarCustom></SidebarCustom>
                             </div>
-                            <div className="w-10/12 bg-white p-2">
+                            <div className="w-full lg:w-10/12 bg-white p-2">
                                 {children}
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-export type EmailType = 'inbox' | 'trash' | 'redo';
+export type EmailType = 'inbox' | 'trash' | 'redo' | 'search';
 
 export interface UserPlaceHolder{
     idUser: number,

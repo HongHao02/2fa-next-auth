@@ -22,9 +22,10 @@ interface EmailItemProps {
         };
     };
     type?: EmailType;
+    searchKey?: string
 }
 
-function EmailItem({ email, type = 'inbox' }: EmailItemProps) {
+function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
     // const handleMotoTrash = () => {
     //     dispatch(addTrashEmail(email));
     //     if (true) {
@@ -40,6 +41,10 @@ function EmailItem({ email, type = 'inbox' }: EmailItemProps) {
                 return `${PATH_URL.MAIL_BOX}/${email.email.id}`;
             case 'redo':
                 return `${PATH_URL.MAIL_BOX}/${email.email.id}`;
+            case 'search':
+                return `${PATH_URL.SEARCH}/${searchKey}/${email.email.id}`;
+            default:
+                return `${PATH_URL.MAIL_BOX}`
         }
     };
     return (
@@ -47,7 +52,7 @@ function EmailItem({ email, type = 'inbox' }: EmailItemProps) {
             <div
                 className={`w-full flex p-2 gap-2  text-[12px] cursor-pointer hover:bg-white hover:border-b-[1px] hover:border-l-[1px] hover:shadow-md hover:rounded-sm group relative
                 }`}
-                // onClick={() => dispatch(addActiveEmail(email))}
+            // onClick={() => dispatch(addActiveEmail(email))}
             >
                 <div className="flex-1">
                     <div className="flex">

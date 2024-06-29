@@ -1,4 +1,5 @@
 'use client'
+import { useParams } from 'next/navigation'
 import { getReceivedEmail } from '@/actions/received-email';
 import EmailItem from '@/components/email/email-item';
 import HashLoaderCustom from '@/components/hash-loader-custom';
@@ -7,28 +8,33 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { fakeEmails } from '@/data/placeholder';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { searchEmail } from '@/actions/email';
 
-
-const MailBoxLayout = ({ children }: { children: React.ReactNode }) => {
+const KeyPage = () => {
+    const { key } = useParams()
     const { data, error, isLoading } = useQuery({
-        queryKey: ['receivedEmails'],
-        queryFn: () => getReceivedEmail(),
+        queryKey: ['search-emails-key', key as string],
+        queryFn: () => searchEmail(key as string),
     });
     console.log("data ", data);
 
 
     if (isLoading) return <HashLoaderCustom></HashLoaderCustom>;
     if (error) return <div>Error loading data: {error.message}</div>;
+    if (data?.length == 0) {
+        return <div className='flex justify-center items-center h-full bg-slate-100 rounded-md'>
+            Not found for <span className='font-semibold ml-2 '>{key}</span>
+        </div>
+    }
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 h-full w-full gap-2 ">
+        <div className="w-full h-full">
             <div className="p-2">
-                {data?.data?.map((email, index) => (
-                    <EmailItem key={index} email={email}></EmailItem>
+                {data?.map((email, index) => (
+                    <EmailItem key={index} email={{ email: email }} type='search' searchKey={key as string}></EmailItem>
                 ))}
             </div>
-            <div className=" hidden md:block col-span-2 bg-slate-100  p-2 rounded-lg">{children}</div>
         </div>
     );
-};
+}
 
-export default MailBoxLayout;
+export default KeyPage
