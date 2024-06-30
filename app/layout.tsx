@@ -8,7 +8,10 @@ import TanstackProvider from '@/util/TanstackProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'MailBox App',
+    title: {
+        template: '%s | MailBoxApp',
+        default: 'MailBoxApp',
+    },
     description: 'MailBox App for manage your email',
 };
 

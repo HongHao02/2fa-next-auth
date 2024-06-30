@@ -4,7 +4,9 @@ import EmailItem from '@/components/email/email-item';
 import HashLoaderCustom from '@/components/hash-loader-custom';
 import NoData from '@/components/no-data';
 import { useQuery } from '@tanstack/react-query';
+import { Metadata } from 'next';
 import React from 'react';
+
 
 
 const MailBoxLayout = ({ children }: { children: React.ReactNode }) => {
