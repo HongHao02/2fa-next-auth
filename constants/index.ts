@@ -6,6 +6,7 @@ export const PATH_URL = {
     SEND_EMAIL: '/send-email',
     SETTNG: '/setting',
     SEARCH: '/search',
+    TRASH: '/trash',
     SIDE_BAR: {
         NEW_EMAIL: '/mail-box/new-email',
     },

@@ -37,18 +37,18 @@ const Search = () => {
     };
 
     return (
-        <div className="w-[200px] lg:w-[1000px] max-w-sm  bg-white px-1 py-1 rounded-md ">
+        <div className="w-[200px] lg:w-[1000px] max-w-sm  bg-white px-2 py-1 rounded-md ">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubit)} className=" flex items-center gap-1" onReset={() => form.reset()}>
                     <IconButton type="submit"><SearchOutlinedIcon className="w-7 h-7"></SearchOutlinedIcon></IconButton>
-                    <div className="space-y-4">
+                    <div className="space-y-4 flex-grow">
                         <FormField
                             control={form.control}
                             name="key"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <InputBase sx={{width: '100%'}} type='text' placeholder="Enter your content..." {...field} />
+                                        <InputBase sx={{width: '100%' , marginRight: '10px'}}  type='text' placeholder="Enter your content..." {...field} />
                                     </FormControl>
                                 </FormItem>
                             )}

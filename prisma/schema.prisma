@@ -104,6 +104,7 @@ model Email {
   senderId   String
   subject    String?
   body       String?
+  isTrash    Boolean     @default(false)
   sentAt     DateTime    @default(now())
   recipients Recipient[]
   replies    Reply[]
@@ -120,9 +121,9 @@ model Recipient {
 
 model Reply {
   id        Int      @id @default(autoincrement())
-  email     Email    @relation(fields: [emailId], references: [id])
+  email     Email    @relation(fields: [emailId], references: [id], onDelete: Cascade)
   emailId   Int
-  sender    User     @relation(fields: [senderId], references: [id])
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
   senderId  String
   body      String
   repliedAt DateTime @default(now())

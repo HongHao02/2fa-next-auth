@@ -9,6 +9,7 @@ import { fakeEmails } from '@/data/placeholder';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { searchEmail } from '@/actions/email';
+import SearchItem from '@/components/email/search-item';
 
 const KeyPage = () => {
     const { key } = useParams()
@@ -21,7 +22,7 @@ const KeyPage = () => {
 
     if (isLoading) return <HashLoaderCustom></HashLoaderCustom>;
     if (error) return <div>Error loading data: {error.message}</div>;
-    if (data?.length == 0) {
+    if (data?.data?.length == 0) {
         return <div className='flex justify-center items-center h-full bg-slate-100 rounded-md'>
             Not found for <span className='font-semibold ml-2 '>{key}</span>
         </div>
@@ -29,8 +30,8 @@ const KeyPage = () => {
     return (
         <div className="w-full h-full">
             <div className="p-2">
-                {data?.map((email, index) => (
-                    <EmailItem key={index} email={{ email: email }} type='search' searchKey={key as string}></EmailItem>
+                {data?.data && data?.data.map((email, index) => (
+                    <SearchItem key={index} email={email} type='search' searchKey={key as string}></SearchItem>
                 ))}
             </div>
         </div>

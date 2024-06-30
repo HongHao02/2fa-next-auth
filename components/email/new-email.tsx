@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useTransition } from 'react';
-import { LoginSchema, NewEmailSchema } from '@/schemas';
+import { NewEmailSchema } from '@/schemas';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
@@ -14,9 +14,24 @@ import { newEmail } from '@/actions/new-email';
 import { Textarea } from '../ui/textarea';
 import { useRouter } from 'next/navigation';
 import { PATH_URL } from '@/constants';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 const NewEmail = () => {
     const [isPending, startTransition] = useTransition();
-    const router= useRouter()
+    const router = useRouter()
+
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation({
+        mutationFn: newEmail,
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ['receivedEmails'] });
+            toast.success("Send email successfully")
+        },
+        onError: () => {
+            toast.error("Something went wrong! Try again.")
+        }
+    });
 
     const form = useForm<z.infer<typeof NewEmailSchema>>({
         resolver: zodResolver(NewEmailSchema),
@@ -29,19 +44,28 @@ const NewEmail = () => {
     const onSubit = (values: z.infer<typeof NewEmailSchema>) => {
         console.log('[newEmail]', values);
         startTransition(() => {
-            newEmail(values)
-                .then((data) => {
-                    if (data?.error) {
-                        form.reset();
-                        toast.error(data?.error);
-                    }
-                    if (data?.success) {
-                        form.reset();
-                        router.push(PATH_URL.MAIL_BOX)
-                        toast.success(data?.success);
-                    }
-                })
-                .catch((error) => toast.error(error));
+            /**
+             * Call server action
+             */
+            // newEmail(values)
+            //     .then((data) => {
+            //         if (data?.error) {
+            //             form.reset();
+            //             toast.error(data?.error);
+            //         }
+            //         if (data?.success) {
+            //             form.reset();
+            //             router.push(PATH_URL.MAIL_BOX)
+            //             toast.success(data?.success);
+            //         }
+            //     })
+            //     .catch((error) => toast.error(error));
+            /**
+             * useMutation: mutation
+             */
+            mutation.mutate(values);
+            form.reset();
+            router.push(PATH_URL.MAIL_BOX)
         });
     };
     return (

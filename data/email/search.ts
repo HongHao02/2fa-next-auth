@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 
 export const searchEmailByKey = async (
     key: string,
+    userId: string,
     page: number = PAGE_NUMBER_DEFAULT,
     pageSize: number = PAGE_SIZE,
 ) => {
@@ -12,6 +13,12 @@ export const searchEmailByKey = async (
 
         const emails = await db.email.findMany({
             where: {
+                isTrash: false,
+                recipients: {
+                    some: {
+                        recipientId: userId,
+                    },
+                },
                 OR: [
                     {
                         subject: {
@@ -54,7 +61,6 @@ export const searchEmailByKey = async (
             skip: skip,
             take: take,
         });
-
         return emails;
     } catch (error) {
         return null;

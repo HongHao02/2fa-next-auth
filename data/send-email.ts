@@ -9,6 +9,7 @@ export const getSendEmailByUserId = async (userId: string, page: number = PAGE_N
         const emails = await db.email.findMany({
             where: {
               senderId: userId,
+              isTrash: false,
             },
             select: {
               id: true,

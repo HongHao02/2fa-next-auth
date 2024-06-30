@@ -9,6 +9,9 @@ export const getReceivedEmailByUserId = async (userId: string, page: number, pag
         const emails = await db.recipient.findMany({
             where: {
                 recipientId: userId,
+                email: {
+                    isTrash: false
+                }
             },
             select: {
                 email: {

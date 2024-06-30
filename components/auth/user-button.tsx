@@ -38,7 +38,7 @@ const UserButton = () => {
             <DropdownMenuContent className="w-40 space-y-1" align="end">
                 <Link href={PATH_URL.SETTNG} >
                     <DropdownMenuItem>
-                        <SettingsSuggestIcon></SettingsSuggestIcon>
+                        <SettingsSuggestIcon className=' mr-2'></SettingsSuggestIcon>
                         Settings
                     </DropdownMenuItem>
                 </Link>

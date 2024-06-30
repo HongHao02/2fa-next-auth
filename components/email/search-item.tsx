@@ -1,4 +1,3 @@
-'use client'
 import { PATH_URL } from '@/constants';
 import { EmailType } from '@/types/email.type';
 import Link from 'next/link';
@@ -7,66 +6,45 @@ import ArchiveIcon from '@mui/icons-material/Archive';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import { IconButton, Tooltip } from '@mui/material';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { trashMail } from '@/actions/email';
-import { toast } from 'sonner';
 
-interface EmailItemProps {
+interface SearchItemProps {
     email: {
-        email: {
-            subject: string | null;
-            id: number;
-            sentAt: Date;
-            sender: {
-                name: string | null;
-                id: string;
-                email: string;
-            };
+        body: string | null;
+        id: number;
+        subject: string | null;
+        sentAt: Date;
+        sender: {
+            name: string | null;
+            id: string;
+            email: string;
+            image?: string
         };
-    };
+    }
     type?: EmailType;
     searchKey?: string
 }
 
-function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
+function SearchItem({ email, type = 'inbox', searchKey }: SearchItemProps) {
     // const handleMotoTrash = () => {
     //     dispatch(addTrashEmail(email));
     //     if (true) {
     //         handleShowAlert('Move to trash successful', 'success');
     //     }
     // };
-    const queryClient = useQueryClient();
-
-    const mutation = useMutation({
-        mutationFn: trashMail,
-        onSuccess: () => {
-            // Invalidate and refetch
-            queryClient.invalidateQueries({ queryKey: ['receivedEmails'] });
-            toast.success("Move to trash successfully.")
-        },
-        onError: () => {
-            toast.error("Something went wrong! Try again.")
-        }
-    });
 
     const chooseLink = (type: EmailType): string => {
         switch (type) {
             case 'inbox':
-                return `${PATH_URL.MAIL_BOX}/${email.email.id}`;
+                return `${PATH_URL.MAIL_BOX}/${email.id}`;
             case 'trash':
-                return `${PATH_URL.MAIL_BOX}/${email.email.id}`;
+                return `${PATH_URL.MAIL_BOX}/${email.id}`;
             case 'redo':
-                return `${PATH_URL.MAIL_BOX}/${email.email.id}`;
+                return `${PATH_URL.MAIL_BOX}/${email.id}`;
             case 'search':
-                return `${PATH_URL.SEARCH}/${searchKey}/${email.email.id}`;
+                return `${PATH_URL.SEARCH}/${searchKey}/${email.id}`;
             default:
                 return `${PATH_URL.MAIL_BOX}`
         }
-    };
-    const handleMoveToTrash = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
-        e.stopPropagation(); // Prevent the Link action
-        mutation.mutate(email.email.id);
     };
     return (
         <Link href={chooseLink(type)}>
@@ -77,12 +55,18 @@ function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
             >
                 <div className="flex-1">
                     <div className="flex">
-                        <p className='font-semibold'>{email.email.sender.email}</p>
+                        <p className='w-56 max-w-80'>{email.sender.name}</p>
+                        <p>
+                            <span className='font-semibold'>{email.subject}--</span>
+                            <span className='font-light'>{email.body?.slice(0, 200)}...</span>
+                        </p>
                         <p className="flex justify-end ml-auto">
-                            {moment(email.email.sentAt, 'DD/MM/YYYY hh:mm:ss', true).format('DD/MM/YYYY HH:mm')}
+                            {moment(email.sentAt, 'DD/MM/YYYY hh:mm:ss', true).format('DD/MM/YYYY HH:mm')}
                         </p>
                     </div>
-                    <div>{email.email.subject}</div>
+                    <div>
+                        <p>{`<${email.sender.email}>`}</p>
+                    </div>
                 </div>
                 <div className={`absolute right-0 top-0 z-[9999] w-40 hidden group-hover:block bg-inherit h-full`}>
                     <div className="flex justify-center gap-1">
@@ -92,7 +76,7 @@ function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
                             </IconButton>
                         </Tooltip>
                         <Tooltip placement="top" title="Move to Trash">
-                            <IconButton onClick={handleMoveToTrash}>
+                            <IconButton>
                                 <DeleteIcon fontSize="small" color="action"></DeleteIcon>
                             </IconButton>
                         </Tooltip>
@@ -105,4 +89,4 @@ function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
         </Link>
     );
 }
-export default EmailItem;
+export default SearchItem;

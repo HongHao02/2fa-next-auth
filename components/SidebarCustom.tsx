@@ -83,7 +83,7 @@ const ITEMS: TreeViewBaseItem<ExtendedTreeItemProps>[] = [
     ],
   },
   { id: "3", label: "History", fileType: "folder", to: "unknow" },
-  { id: "4", label: "Trash", fileType: "trash", to: PATH_URL.SIDE_BAR.NEW_EMAIL },
+  { id: "4", label: "Trash", fileType: "trash", to: PATH_URL.TRASH },
 ];
 
 function DotIcon() {
