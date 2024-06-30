@@ -1,15 +1,13 @@
 import React from 'react'
 
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
 import Link from 'next/link'
-import { Button } from './ui/button'
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+import SendIcon from '@mui/icons-material/Send';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { PATH_URL } from '@/constants';
+import { IconButton, Tooltip } from '@mui/material';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 interface ToolTipItemProps {
     trigger: any,
@@ -18,31 +16,46 @@ interface ToolTipItemProps {
 }
 const SIDE_BAR_LIST: ToolTipItemProps[] = [
     {
-        trigger: <MailOutlinedIcon className='w-8 h-8'></MailOutlinedIcon>,
+        trigger: <Tooltip placement='right' title="New Email">
+            <IconButton><MailOutlinedIcon className='w-6 h-6'></MailOutlinedIcon></IconButton>
+        </Tooltip>,
         content: "New Email",
         href: PATH_URL.SIDE_BAR.NEW_EMAIL
     },
     {
-        trigger: <MailOutlinedIcon className='w-8 h-8'></MailOutlinedIcon>,
-        content: "New Email",
-        href: PATH_URL.SIDE_BAR.NEW_EMAIL
+        trigger: <Tooltip placement='right' title="Send Items">
+            <IconButton><SendIcon className='w-6 h-6'></SendIcon></IconButton>
+        </Tooltip>,
+        content: "Send Items",
+        href: PATH_URL.SEND_EMAIL
     },
     {
-        trigger: <MailOutlinedIcon className='w-8 h-8'></MailOutlinedIcon>,
-        content: "New Email",
-        href: PATH_URL.SIDE_BAR.NEW_EMAIL
-    }
+        trigger: <Tooltip placement='right' title="Drafts">
+            <IconButton><DraftsIcon className='w-6 h-6'></DraftsIcon></IconButton>
+        </Tooltip>,
+        content: "Drafts",
+        href: PATH_URL.DRAFTS
+    },
+    {
+        trigger: <Tooltip placement='right' title="Settings">
+            <IconButton><ManageAccountsIcon className='w-6 h-6'></ManageAccountsIcon></IconButton>
+        </Tooltip>,
+        content: "Settings",
+        href: PATH_URL.SETTNG
+    },
+
 ]
 const ToolTipItem = ({ trigger, content, href }: ToolTipItemProps) => (
     <Link href={href}>
-        <TooltipProvider delayDuration={200}>
+        {/* <TooltipProvider delayDuration={200}>
             <Tooltip>
                 <TooltipTrigger asChild>{trigger}</TooltipTrigger>
                 <TooltipContent align='end'>
                     <p>{content}</p>
                 </TooltipContent>
             </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
+        {trigger}
     </Link>
 )
 

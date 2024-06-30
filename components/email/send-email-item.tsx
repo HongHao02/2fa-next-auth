@@ -1,3 +1,4 @@
+'use client'
 import { PATH_URL } from '@/constants';
 import { EmailType } from '@/types/email.type';
 import { Email } from '@prisma/client';
@@ -8,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import { IconButton, Tooltip } from '@mui/material';
 import { Badge } from '../ui/badge';
+import { useParams, useSearchParams } from 'next/navigation';
 
 interface SendEmailItemProps {
     email: {
@@ -25,23 +27,19 @@ interface SendEmailItemProps {
 }
 
 function SendEmailItem({ email }: SendEmailItemProps) {
-    // const handleMotoTrash = () => {
-    //     dispatch(addTrashEmail(email));
-    //     if (true) {
-    //         handleShowAlert('Move to trash successful', 'success');
-    //     }
-    // };
+    const { send_id } = useParams()
+    const searchParams = useSearchParams()
 
     return (
-        <Link href={`${PATH_URL.SEND_EMAIL}/${email.id}`}>
+        <Link href={`${PATH_URL.SEND_EMAIL}/${email.id}?page=${searchParams.get('page') || 1}`}>
             <div
-                className={`w-full flex p-2 gap-2  text-[12px] cursor-pointer hover:bg-white hover:border-b-[1px] hover:border-l-[1px] hover:shadow-md hover:rounded-sm group relative
+                className={`w-full flex p-2 gap-2  text-[12px] ${parseInt(send_id as string) === email.id ? "bg-slate-200 rounded-lg" : ''} cursor-pointer hover:border-b-[1px] hover:border-l-[1px] hover:shadow-md hover:rounded-sm hover:bg-slate-100 group relative
                 }`}
             >
                 <div className="flex-1">
                     <div className="flex">
                         <div className="font-semibold flex gap-1">
-                            {email.recipients.map(({recipient}, index) => (
+                            {email.recipients.map(({ recipient }, index) => (
                                 <Badge key={index} variant="secondary">
                                     {recipient.email}
                                 </Badge>

@@ -3,15 +3,15 @@ import { db } from '@/lib/db';
 
 export const getReceivedEmailByUserId = async (userId: string, page: number, pageSize: number = PAGE_SIZE) => {
     try {
-        const skip = (page - 1) * pageSize
+        const skip = (page - 1) * pageSize;
         const take = pageSize;
 
         const emails = await db.recipient.findMany({
             where: {
                 recipientId: userId,
                 email: {
-                    isTrash: false
-                }
+                    isTrash: false,
+                },
             },
             select: {
                 email: {
@@ -23,7 +23,7 @@ export const getReceivedEmailByUserId = async (userId: string, page: number, pag
                             select: {
                                 id: true,
                                 name: true,
-                                email: true
+                                email: true,
                             },
                         },
                     },
@@ -39,6 +39,22 @@ export const getReceivedEmailByUserId = async (userId: string, page: number, pag
         });
 
         return emails;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const getTotalReceivedEmailsByUserId = async (userId: string) => {
+    try {
+        const totalREmails = await db.recipient.count({
+            where: {
+                recipientId: userId,
+                email: {
+                    isTrash: false,
+                },
+            },
+        });
+        return totalREmails;
     } catch (error) {
         return null;
     }

@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { trashMail } from '@/actions/email';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
 
 interface EmailItemProps {
     email: {
@@ -32,6 +33,13 @@ interface EmailItemProps {
 function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
     const [isPending, startTransition] = useTransition();
     const queryClient = useQueryClient();
+    const searchParams = useSearchParams()
+    console.log("[Email_Item_Page] ", searchParams.get('page'));
+    
+
+    const { mail_id } = useParams()
+
+
 
     const mutation = useMutation({
         mutationFn: trashMail,
@@ -48,7 +56,7 @@ function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
     const chooseLink = (type: EmailType): string => {
         switch (type) {
             case 'inbox':
-                return `${PATH_URL.MAIL_BOX}/${email.email.id}`;
+                return `${PATH_URL.MAIL_BOX}/${email.email.id}?page=${searchParams.get('page') || 1}`;
             case 'trash':
                 return `${PATH_URL.MAIL_BOX}/${email.email.id}`;
             case 'redo':
@@ -69,7 +77,7 @@ function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
     return (
         <Link href={chooseLink(type)}>
             <div
-                className={`w-full flex p-2 gap-2  text-[12px] cursor-pointer hover:bg-white hover:border-b-[1px] hover:border-l-[1px] hover:shadow-md hover:rounded-sm group relative
+                className={`w-full flex p-2 gap-2  text-[12px] ${parseInt(mail_id as string) === email.email.id ? "bg-slate-200 rounded-lg" : ''} border-b-transparent border-l-transparent cursor-pointer hover:bg-slate-100 hover:border-b-[1px] hover:border-l-[1px] hover:shadow-md hover:rounded-sm group relative
                 } ${isPending ? 'animate-pulse cursor-progress' : ''}`}
             // onClick={() => dispatch(addActiveEmail(email))}
             >
