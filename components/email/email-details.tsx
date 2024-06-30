@@ -11,11 +11,13 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getEmailDetails } from '@/actions/email-detail';
 import ReplyForm from './reply-form';
 import HashLoaderCustom from '../hash-loader-custom';
+import { useCurrentUser } from '@/hooks/use-current-user';
 
 // import _ from 'lodash';
 
 const EmailDetails = ({ id }: { id: string }) => {
     const [showForm, setShowForm] = useState<boolean>(false);
+    const currentUser = useCurrentUser()
     const { data, error, isLoading } = useQuery({
         queryKey: ['email-details', id],
         queryFn: () => getEmailDetails(parseInt(id))
@@ -40,7 +42,7 @@ const EmailDetails = ({ id }: { id: string }) => {
                             <StarBorderIcon fontSize="small"></StarBorderIcon>
                         </div>
                     </div>
-                    <div className="text-sm font-light">receiver</div>
+                    <div className="text-sm font-light">{(currentUser?.id || 0) === data?.email?.sender.id ? "sender" : "receiver"}</div>
                     <div className="mt-4 text-justify">{data?.email?.body}</div>
                     <Divider></Divider>
                     <div className="flex flex-col gap-2">
