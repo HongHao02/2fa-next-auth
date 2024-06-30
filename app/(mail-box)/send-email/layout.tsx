@@ -1,14 +1,10 @@
 'use client';
 import { getToltalPages } from '@/actions/received-email';
 import { getSendEmail } from '@/actions/send-email';
-import EmailItem from '@/components/email/email-item';
 import Pagination from '@/components/email/pagination';
 import SendEmailItem from '@/components/email/send-email-item';
 import HashLoaderCustom from '@/components/hash-loader-custom';
-import { SkeletonCard } from '@/components/skeleton-card';
-import { Skeleton } from '@/components/ui/skeleton';
 import { PAGE_SIZE } from '@/constants';
-import { fakeEmails } from '@/data/placeholder';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -34,7 +30,7 @@ const MailBoxLayout = ({ children }: { children: React.ReactNode }) => {
     }, [currentPage])
     const { data, error, isLoading } = useQuery({
         queryKey: ['sendEmails'],
-        queryFn: () => getSendEmail(),
+        queryFn: () => getSendEmail(currentPage),
     });
     console.log('data ', data);
 

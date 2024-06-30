@@ -1,11 +1,10 @@
 'use client'
 import AuthContext from '@/components/auth-context'
-import LogoutButton from '@/components/auth/logout-button'
 import Feature from '@/components/feature'
 import Header from '@/components/header'
 import LeftSideBar from '@/components/left-side-bar'
 import SidebarCustom from '@/components/SidebarCustom'
-import { Divider, IconButton, Tooltip } from '@mui/material'
+import { Tooltip } from '@mui/material'
 import React from 'react'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { AlertDialogCustom } from '@/components/alert-dialog-custom'
