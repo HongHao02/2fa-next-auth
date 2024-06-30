@@ -9,6 +9,7 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { restoreTrashMail } from '@/actions/email';
 import { toast } from 'sonner';
+import { useTransition } from 'react';
 
 interface TrashItemProps {
     trash: {
@@ -32,6 +33,7 @@ interface TrashItemProps {
 
 function TrashItem({ trash }: TrashItemProps) {
     const queryClient = useQueryClient();
+    const [isPending, startTransition] = useTransition();
 
     const mutation = useMutation({
         mutationFn: restoreTrashMail,
@@ -45,16 +47,18 @@ function TrashItem({ trash }: TrashItemProps) {
         }
     });
     const handleRestore = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
-        e.stopPropagation(); // Prevent the Link action
-        mutation.mutate({ emailId: trash.email.id, trashId: trash.id });
+        startTransition(() => {
+            e.preventDefault()
+            e.stopPropagation(); // Prevent the Link action
+            mutation.mutate({ emailId: trash.email.id, trashId: trash.id });
+        })
     };
 
     return (
         <Link href={`${PATH_URL.TRASH}/${trash.id}`}>
             <div
                 className={`w-full flex p-2 gap-2  text-[12px] cursor-pointer hover:bg-white hover:border-b-[1px] hover:border-l-[1px] hover:shadow-md hover:rounded-sm group relative
-                }`}
+                } ${isPending ? 'animate-pulse cursor-progress' : ''} `}
             // onClick={() => dispatch(addActiveEmail(email))}
             >
                 <div className="flex-1">
@@ -85,7 +89,7 @@ function TrashItem({ trash }: TrashItemProps) {
                             </IconButton>
                         </Tooltip>
                         <Tooltip placement='top' title="Restore">
-                            <IconButton onClick={handleRestore}>
+                            <IconButton onClick={handleRestore} disabled={isPending}>
                                 <RestoreIcon fontSize="small" color="action"></RestoreIcon>
                             </IconButton>
                         </Tooltip>

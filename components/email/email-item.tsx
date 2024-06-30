@@ -10,6 +10,7 @@ import { IconButton, Tooltip } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { trashMail } from '@/actions/email';
 import { toast } from 'sonner';
+import { useTransition } from 'react';
 
 interface EmailItemProps {
     email: {
@@ -29,12 +30,7 @@ interface EmailItemProps {
 }
 
 function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
-    // const handleMotoTrash = () => {
-    //     dispatch(addTrashEmail(email));
-    //     if (true) {
-    //         handleShowAlert('Move to trash successful', 'success');
-    //     }
-    // };
+    const [isPending, startTransition] = useTransition();
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
@@ -64,15 +60,17 @@ function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
         }
     };
     const handleMoveToTrash = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
-        e.stopPropagation(); // Prevent the Link action
-        mutation.mutate(email.email.id);
+        startTransition(() => {
+            e.preventDefault()
+            e.stopPropagation(); // Prevent the Link action
+            mutation.mutate(email.email.id);
+        })
     };
     return (
         <Link href={chooseLink(type)}>
             <div
                 className={`w-full flex p-2 gap-2  text-[12px] cursor-pointer hover:bg-white hover:border-b-[1px] hover:border-l-[1px] hover:shadow-md hover:rounded-sm group relative
-                }`}
+                } ${isPending ? 'animate-pulse cursor-progress' : ''}`}
             // onClick={() => dispatch(addActiveEmail(email))}
             >
                 <div className="flex-1">
@@ -92,13 +90,16 @@ function EmailItem({ email, type = 'inbox', searchKey }: EmailItemProps) {
                             </IconButton>
                         </Tooltip>
                         <Tooltip placement="top" title="Move to Trash">
-                            <IconButton onClick={handleMoveToTrash}>
+                            <IconButton onClick={handleMoveToTrash} disabled={isPending}>
                                 <DeleteIcon fontSize="small" color="action"></DeleteIcon>
                             </IconButton>
                         </Tooltip>
-                        <IconButton>
-                            <BookmarkAddIcon fontSize="small" color="action"></BookmarkAddIcon>
-                        </IconButton>
+                        <Tooltip placement="top" title="Bookmark">
+                            <IconButton disabled={true}>
+                                <BookmarkAddIcon fontSize="small" color="action"></BookmarkAddIcon>
+                            </IconButton>
+                        </Tooltip>
+
                     </div>
                 </div>
             </div>
