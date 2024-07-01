@@ -24,6 +24,8 @@ export const newEmail = async (values: z.infer<typeof NewEmailSchema>) => {
         }
         //find receiver email
         const existingEmail = await getUserByEmail(to);
+        console.log("[existingEmail] ", existingEmail?.email, existingEmail?.name, !existingEmail);
+        
         if (!existingEmail) {
             return { error: 'Receiver email does not exist!' };
         }

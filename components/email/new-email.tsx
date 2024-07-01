@@ -17,20 +17,26 @@ import { PATH_URL } from '@/constants';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 const NewEmail = () => {
     const [isPending, startTransition] = useTransition();
-    const router = useRouter()
+    const router = useRouter();
 
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
         mutationFn: newEmail,
-        onSuccess: () => {
+        onSuccess: (data) => {
             // Invalidate and refetch
             queryClient.invalidateQueries({ queryKey: ['receivedEmails'] });
-            toast.success("Send email successfully")
+            //handle error here
+            if (data.success) {
+                toast.success(data.success);
+                queryClient.invalidateQueries({ queryKey: ['receivedEmails'] });
+            } else if (data.error) {
+                toast.error(data.error);
+            }
         },
         onError: () => {
-            toast.error("Something went wrong! Try again.")
-        }
+            toast.error('Something went wrong! Try again.');
+        },
     });
 
     const form = useForm<z.infer<typeof NewEmailSchema>>({
@@ -65,7 +71,7 @@ const NewEmail = () => {
              */
             mutation.mutate(values);
             form.reset();
-            router.push(PATH_URL.MAIL_BOX)
+            router.push(PATH_URL.MAIL_BOX);
         });
     };
     return (
