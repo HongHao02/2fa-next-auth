@@ -17,7 +17,7 @@ export const sendVrificationEmail = async (email: string, token: string) => {
     await resend.emails.send({
         from: 'onboarding@resend.dev',
         to: email,
-        subject: 'Confirm your email to reset passoword',
+        subject: 'Confirm your email to register',
         html: `
     <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@ export const sendVrificationEmail = async (email: string, token: string) => {
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
 />
-<title>Confirm email</title>
+<title>Confirm email to register</title>
 <style>
   @font-face {
     font-family: "Baloo Bhaina 2";
@@ -71,8 +71,8 @@ export const sendVrificationEmail = async (email: string, token: string) => {
           font-weight: 800;
         "
       >
-        <span style="color: #002060">Net</span
-        ><span style="color: #58a44c">Auth</span>
+        <span style="color: #6b21a8">MAILBOX</span
+        ><span style="color: #ffffff">APP</span>
       </header>
       <div
         style="
@@ -84,13 +84,13 @@ export const sendVrificationEmail = async (email: string, token: string) => {
       <div class="content">
         <div class="details">
           <p style="margin-top: 10px; margin-bottom: 10px">
-            Dear <strong>${existingUser?.name}</strong>
+            Dear <strong>${existingUser?.name},</strong>
           </p>
           <p>
-            We have received a request to reset your password for email
+            We have received a request to register a <span style="color: #6b21a8">MAILBOX</span
+        ><span style="color: #ffffff">APP</span> account of an email: 
             ${email}. To ensure the security of
-            your account, please follow the instructions below to reset your
-            password:
+            your account, please follow the instructions below to confirm register:
           </p>
           <div
             style="
@@ -147,7 +147,7 @@ export const sendVrificationEmail = async (email: string, token: string) => {
             </p>
             <div>
               Best regards,<br />
-              Petcare System.
+              MAILBOX-APP System.
             </div>
           </div>
         </div>
@@ -176,6 +176,7 @@ export const sendVrificationEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
+    const existingUser = await getUserByEmail(email);
     const resetLink = `http://localhost:3000/auth/new-password?token=${token}`;
     await resend.emails.send({
         from: 'onboarding@resend.dev',
@@ -234,8 +235,8 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
             font-weight: 800;
           "
         >
-          <span style="color: #002060">Pet</span
-          ><span style="color: #58a44c">Care</span>
+          <span style="color: #6b21a8">MAILBOX</span
+        ><span>APP</span>
         </header>
         <div
           style="
@@ -247,13 +248,11 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
         <div class="content">
           <div class="details">
             <p style="margin-top: 10px; margin-bottom: 10px">
-              Dear <strong>[Client_FirstName]</strong>
-              <strong>[Client_LastName],</strong>
+              Dear <strong>${existingUser?.name || 'Sir/Madam'}</strong>,
             </p>
             <p>
               We have received a request to reset your password for
-              <strong>[Client_FirstName]</strong>
-              <strong>[Client_LastName]</strong>. To ensure the security of
+              email <strong>${email}</strong>. To ensure the security of
               your account, please follow the instructions below to reset your
               password:
             </p>
@@ -313,7 +312,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
               </p>
               <div>
                 Best regards,<br />
-                Petcare System.
+                MAILBOXAPP System.
               </div>
             </div>
           </div>
